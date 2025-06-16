@@ -1,9 +1,15 @@
+html {
+  scroll-behavior: smooth;
+}
+
+
 body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
 }
+
 
 .container {
     padding: 40px;
@@ -36,4 +42,15 @@ h2 {
     border-radius: 10px;
     background-color: white;
     padding: 20px;
+}
+
+.nav-pills .nav-link {
+    color: black !important;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: rgba(29, 185, 84, 0.7) !important;  /* Spotify green with 70% opacity */
+    color: white !important;
 }
