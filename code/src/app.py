@@ -168,7 +168,7 @@ def render_page_content(pathname):
         html.H2("📌 Target Questions & Visualizations", style={"color": "#1DB954", "fontSize": "28px", "marginTop": "40px"}),
 
         html.Ul([
-            html.Li("🟢 V1 - Temporal Trends: How do musical features evolve over time?", style={'fontSize': '18px'}),
+            html.Li("🟢 V1 - Multi-line time series chart: How do musical features evolve over time?", style={'fontSize': '18px'}),
             html.Li("🟢 V2 - Stacked Area: Release date distribution across genres", style={'fontSize': '18px'}),
             html.Li("🟢 V3 - Radar Chart: Audio feature patterns by genre", style={'fontSize': '18px'}),
             html.Li("🟢 V4 - Scatter Plot: Feature combinations vs popularity", style={'fontSize': '18px'}),
