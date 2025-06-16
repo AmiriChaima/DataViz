@@ -325,3 +325,6 @@ def update_stacked(selected_genres):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+    
+server = app.server
