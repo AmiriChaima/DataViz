@@ -2,23 +2,6 @@
 
 This project is built with **Dash** and **Plotly**, designed for visualizing and exploring Spotify song data.
 
-## 📁 Project Structure
-
-```
-
-DataViz/
-    ├── code/
-    │   └── src/             # Contains all application source code
-    │       ├── app.py
-    │       ├── server.py
-    │       ├── scatter_chart.py
-    │       ├── ...
-    │       └── requirements.txt
-    ├── requirements.windows.txt
-    ├── requirements.linux.txt
-    └── README.md            # This file
-```
-
 ## 🚀 Deployment (Render)
 
 The app is deployed using [Render](https://render.com). The working directory is set to `code/src`, and the build/start commands are:
@@ -39,7 +22,7 @@ To run the app locally:
 
 ```bash
 cd code/src
-pip install -r requirements.txt  # Or use requirements.windows.txt if you're on Windows
+pip install -r requirements.txt 
 python server.py
 ```
 
