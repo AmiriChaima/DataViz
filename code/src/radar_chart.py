@@ -1,55 +1,34 @@
-
 import plotly.graph_objects as go
 import numpy as np
+from constaints import GENRE_COLORS as colors
 
-def get_figure(df):
-    """
-    Generates an interactive radar chart of average audio feature profiles by genre.
+def get_figure(df, selected_genres=None):
     
-    Args:
-        df (pd.DataFrame): DataFrame with genres and their average audio features.
+    """Generates a radar chart showing the average audio feature profile by genre."""
     
-    Returns:
-        plotly.graph_objs.Figure: A radar chart figure object.
-    """
     
-
     features = ['energy', 'valence', 'danceability', 'acousticness', 'speechiness']
     
-  
-    colors = {
-        'pop': '#FF1744',      # Bright red
-        'rap': '#00E676',      # Bright green
-        'rock': '#2196F3',     # Bright blue
-        'latin': '#FF9800',    # Bright orange
-        'edm': '#9C27B0'       # Bright purple
-    }
-    
     fig = go.Figure()
-    
-    # Add a trace for each genre
+
     for _, row in df.iterrows():
         genre = row['Genre'].lower()
         values = [row[feature] for feature in features]
-        
-        # Close the radar chart by adding the first value at the end
         values += values[:1]
         feature_labels = features + [features[0]]
-        
+
         fig.add_trace(go.Scatterpolar(
             r=values,
             theta=feature_labels,
             fill='toself',
             name=row['Genre'].title(),
-            line=dict(color=colors.get(genre, '#FF1744'), width=3),
-            fillcolor=colors.get(genre, '#FF1744'),
+            line=dict(color=colors.get(genre, '#17becf'), width=3),
+            fillcolor=colors.get(genre, '#17becf'),
             opacity=0.3,
-            marker=dict(size=8, color=colors.get(genre, '#FF1744')),
-            hovertemplate='<b>%{fullData.name}</b><br>' +
-                         '%{theta}: %{r:.2f}<br>' +
-                         '<extra></extra>'
+            marker=dict(size=8, color=colors.get(genre, '#17becf')),
+            hovertemplate='%{fullData.name}<br>%{theta}: %{r:.2f}<extra></extra>'
         ))
-    
+
     fig.update_layout(
         polar=dict(
             radialaxis=dict(
@@ -90,12 +69,8 @@ def get_figure(df):
         ),
         plot_bgcolor='white',
         paper_bgcolor='white',
-        font=dict(
-            family="Segoe UI",
-            size=12,
-            color="#333"
-        ),
+        font=dict(family="Segoe UI", size=12, color="#333"),
         margin=dict(l=80, r=120, t=80, b=80)
     )
-    
-    return fig 
+
+    return fig

@@ -1,17 +1,17 @@
-
 import plotly.express as px
+from constaints import GENRE_COLORS
+
 
 def get_figure(df):
-    """
-    Generates an interactive bar chart of average track popularity by playlist genre.
-    """
-
+    
+    """Generates a bar chart showing the average track popularity by playlist genre."""
+    
     fig = px.bar(
         df,
         x="Genre",
         y="Average Popularity",
         color="Genre",
-        color_discrete_sequence=["#FFA500"] * len(df),
+        color_discrete_map=GENRE_COLORS,
         hover_data={'Average Popularity': False, 'Genre': False}, 
         title="Average Track Popularity by Playlist Genre"
     )
@@ -24,7 +24,6 @@ def get_figure(df):
         unselected=dict(marker=dict(opacity=0.4))
     )
 
-    
     fig.update_layout(
         hoverlabel=dict(
             bgcolor="white",
@@ -40,15 +39,8 @@ def get_figure(df):
         showlegend=False,
         plot_bgcolor="#f0f2f5",
         paper_bgcolor="white",
-        font=dict(
-            family="Segoe UI",
-            size=14,
-            color="#333"
-        ),
-        title=dict(
-            x=0.5,
-            font=dict(size=20)
-        )
+        font=dict(family="Segoe UI", size=14, color="#333"),
+        title=dict(x=0.5, font=dict(size=20))
     )
 
     return fig

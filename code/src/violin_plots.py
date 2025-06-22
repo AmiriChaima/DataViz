@@ -3,7 +3,7 @@ from plotly.subplots import make_subplots
 
 def get_figure(df):
     """
-    Generates a grid of violin plots for popularity distribution (V5).
+    Generates a grid of violin plots for popularity distribution.
     """
     features = [
         ('danceability_bin', 'Danceability'),
@@ -21,8 +21,8 @@ def get_figure(df):
         horizontal_spacing=0.1
     )
     
-    colors = ["#F27040", "#D3E87E", '#C13584']
-    
+
+    colors= ['#ff7f0e', '#2ca02c', '#9467bd']
     for i, (feature_col, feature_name) in enumerate(features):
         row = i // 3 + 1
         col = i % 3 + 1

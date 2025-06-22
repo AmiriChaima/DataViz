@@ -35,27 +35,20 @@ def line_chart_df(df):
     result = df.groupby(['release_year', 'playlist_genre'])[features].mean().reset_index()
     return result
 
+
 def area_chart_df(df):
     """
     Computes song count per year and genre for area chart visualization.
-
     Args:
         df (pd.DataFrame): Raw Spotify data containing release dates and genres.
-
     Returns:
         pd.DataFrame: DataFrame with 'year', 'Genre', and 'count' columns.
     """
-    
     df_copy = df.copy()
     df_copy['year'] = df_copy['track_album_release_date'].str[:4].astype(int)
-    
-    # df_copy = df_copy[(df_copy['year'] >= 1960) & (df_copy['year'] <= 2020)]
-    
     df_copy['year'] = pd.to_datetime(df_copy['track_album_release_date'].str[:4], format='%Y')
-
-    main_genres = ['pop', 'rap', 'rock', 'r&b']
-    df_copy = df_copy[df_copy['playlist_genre'].isin(main_genres)]
     
+
     area_df = (
         df_copy.groupby(['year', 'playlist_genre'])
         .size()
@@ -68,16 +61,12 @@ def area_chart_df(df):
 def radar_chart_df(df):
     """
     Computes average audio features per playlist genre for radar chart visualization.
-
     Args:
         df (pd.DataFrame): Raw Spotify data containing playlist genres and audio features.
-
     Returns:
         pd.DataFrame: DataFrame with 'Genre' and average audio feature columns.
     """
-   
     audio_features = ['energy', 'valence', 'danceability', 'acousticness', 'speechiness']
-    
     radar_df = (
         df.groupby('playlist_genre')[audio_features]
         .mean()
@@ -85,45 +74,43 @@ def radar_chart_df(df):
         .rename(columns={'playlist_genre': 'Genre'})
     )
     
-    main_genres = ['pop', 'rap', 'rock', 'latin', 'edm']
-    radar_df = radar_df[radar_df['Genre'].isin(main_genres)]
     
     return radar_df
 
 
 
-def scatter_chart_df(df):
-    """
-    Prepares data for Energy vs Valence scatter plot with popularity and danceability.
+# def scatter_chart_df(df):
+#     """
+#     Prepares data for Energy vs Valence scatter plot with popularity and danceability.
 
-    Args:
-        df (pd.DataFrame): Raw Spotify data containing energy, valence, track_popularity, danceability, and track info.
+#     Args:
+#         df (pd.DataFrame): Raw Spotify data containing energy, valence, track_popularity, danceability, and track info.
 
-    Returns:
-        pd.DataFrame: DataFrame with energy, valence, track_popularity, danceability, and track information.
-    """
+#     Returns:
+#         pd.DataFrame: DataFrame with energy, valence, track_popularity, danceability, and track information.
+#     """
    
-    scatter_df = df[['energy', 'valence', 'track_popularity', 'danceability', 
-                    'track_name', 'track_artist']].dropna()
+#     scatter_df = df[['energy', 'valence', 'track_popularity', 'danceability', 
+#                     'track_name', 'track_artist']].dropna()
     
   
-    scatter_df = scatter_df[
-        (scatter_df['track_popularity'] >= 0) & 
-        (scatter_df['track_popularity'] <= 100)
-    ]
+#     scatter_df = scatter_df[
+#         (scatter_df['track_popularity'] >= 0) & 
+#         (scatter_df['track_popularity'] <= 100)
+#     ]
     
     
-    for feature in ['energy', 'valence', 'danceability']:
-        scatter_df = scatter_df[
-            (scatter_df[feature] >= 0) & 
-            (scatter_df[feature] <= 1)
-        ]
+#     for feature in ['energy', 'valence', 'danceability']:
+#         scatter_df = scatter_df[
+#             (scatter_df[feature] >= 0) & 
+#             (scatter_df[feature] <= 1)
+#         ]
     
     
-    if len(scatter_df) > 10000:
-        scatter_df = scatter_df.sample(n=10000, random_state=42)
+#     if len(scatter_df) > 10000:
+#         scatter_df = scatter_df.sample(n=10000, random_state=42)
     
-    return scatter_df.reset_index(drop=True)
+#     return scatter_df.reset_index(drop=True)
 
 
 def violin_plots_df(df):
@@ -160,3 +147,29 @@ def violin_plots_df(df):
     return df_clean
 
 
+def scatter_chart_df(df):
+    """
+    Prepares data for Energy vs Valence scatter plot with popularity and danceability.
+    Args:
+        df (pd.DataFrame): Raw Spotify data containing energy, valence, track_popularity, danceability, and track info.
+    Returns:
+        pd.DataFrame: DataFrame with energy, valence, track_popularity, danceability, playlist_genre, and track information.
+    """
+    scatter_df = df[['energy', 'valence', 'track_popularity', 'danceability',
+                    'track_name', 'track_artist', 'playlist_genre']].dropna()
+    
+    scatter_df = scatter_df[
+        (scatter_df['track_popularity'] >= 0) &
+        (scatter_df['track_popularity'] <= 100)
+    ]
+    
+    for feature in ['energy', 'valence', 'danceability']:
+        scatter_df = scatter_df[
+            (scatter_df[feature] >= 0) &
+            (scatter_df[feature] <= 1)
+        ]
+    
+    if len(scatter_df) > 10000:
+        scatter_df = scatter_df.sample(n=10000, random_state=42)
+    
+    return scatter_df.reset_index(drop=True)
